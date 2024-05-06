@@ -1,6 +1,7 @@
 import Player from './Player.js';
 import Enemy from './Enemy.js';
 
+
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
