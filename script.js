@@ -49,7 +49,7 @@ function randomPosX() {
 
 getRandom();
 
-const player = new Player(canvas.width / 2, canvas.height / 2);
+const player = new Player(canvas.width / 2, canvas.height / 2, canvas);
 const enemy = new Enemy({
     position : {
         x: _x,
@@ -67,7 +67,6 @@ const enemy = new Enemy({
 
 
 function gameLoop() {
-    console.log(enemy.position)
     enemy.target.x = player.x
     enemy.target.y = player.y
     ctx.clearRect(0,0,canvas.width, canvas.height)

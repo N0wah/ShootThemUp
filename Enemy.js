@@ -1,7 +1,7 @@
 export default class Enemy {
     constructor({position,target,life}) {
         this.position = position
-        this.width = 20;
+        this.width = 50;
         this.height = 50;
         this.speed = 2
         this.target = target
