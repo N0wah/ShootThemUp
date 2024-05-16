@@ -1,5 +1,5 @@
 export default class Enemy {
-    constructor({position,target,life}) {
+    constructor({position,target,life,}) {
         this.position = position
         this.width = 50;
         this.height = 50;
@@ -7,16 +7,13 @@ export default class Enemy {
         this.target = target
         this.life = life
     }
-
     draw(ctx){
-        
         ctx.strokeStyle='red';
         ctx.strokeRect(this.position.x, this.position.y, this.width, this.height);
         ctx.fillStyle='red';
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
         this.move();
     }
-
     move(){
             if(this.target.y > this.position.y){
                 this.position.y += this.speed
@@ -32,5 +29,8 @@ export default class Enemy {
             }
            
     }
-
+    die(){
+        this.width = 0;
+        this.height = 0;
+    }
 }

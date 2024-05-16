@@ -50,7 +50,7 @@ function randomPosX() {
 getRandom();
 
 const player = new Player(canvas.width / 2, canvas.height / 2, canvas);
-const enemy = new Enemy({
+let enemy = new Enemy({
     position : {
         x: _x,
         y: _y
@@ -61,10 +61,51 @@ const enemy = new Enemy({
     },
     life: {
         health: 50,
+    },
+    player : {
+        player : player
     }
 })
 
+function checkCollision(){
+    player.bullets.forEach(function (bullet) {
+        const i = player.bullets.indexOf(bullet)
+        if (bullet.x > canvas.width || bullet.y > canvas.height || bullet.x < 0 || bullet.y < 0) {
+            player.bullets.pop(i)
+        }
+        if (
+            bullet.x > enemy.position.x &&
+            bullet.x < enemy.position.x + enemy.width &&
+            bullet.y > enemy.position.y &&
+            bullet.y < enemy.position.y + enemy.height
+        ) {
+            enemy.die()
+            respawnEnemy()
+            player.bullets.pop(i)
+        }
+    })
+    
+}
 
+function respawnEnemy(){
+    getRandom()
+    enemy = new Enemy({
+        position : {
+            x: _x,
+            y: _y
+        },
+        target : {
+            x: player.x,
+            y : player.y
+        },
+        life: {
+            health: 50,
+        },
+        player : {
+            player : player
+        }
+    })
+}
 
 function gameLoop() {
     enemy.target.x = player.x
@@ -72,6 +113,7 @@ function gameLoop() {
     ctx.clearRect(0,0,canvas.width, canvas.height)
     player.draw(ctx)
     enemy.draw(ctx)
+    checkCollision()
 }
 
 
