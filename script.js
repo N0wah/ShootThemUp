@@ -8,6 +8,10 @@ const ctx = canvas.getContext("2d");
 canvas.width = 1280;
 canvas.height = 720;
 
+// ---------------------------- Get random position for the enemy outside the canvas -------------------------- //
+var _x;
+var _y;
+
 function getRandom(){
     var choose = Math.random()
     console.log(choose);
@@ -19,9 +23,6 @@ function getRandom(){
         _y = randomPosY()[1]
     }
 }
-
-var _x;
-var _y;
 
 function randomPosY() {
     var x = Math.random() * (1310-(-10))-10
@@ -47,27 +48,16 @@ function randomPosX() {
     return x_y
 }
 
-getRandom();
+
+
+// ---------------------------- Create Player and Enemy -------------------------- //
 
 const player = new Player(canvas.width / 2, canvas.height / 2, canvas);
-let enemy = new Enemy({
-    position : {
-        x: _x,
-        y: _y
-    },
-    target : {
-        x: player.x,
-        y : player.y
-    },
-    life: {
-        health: 50,
-    },
-    player : {
-        player : player
-    }
-})
+const enemies = new Array(4)
 
-function checkCollision(){
+// ---------------------------- Check collision to kill enemy with bullets -------------------------- //
+
+function checkCollision(enemy){
     player.bullets.forEach(function (bullet) {
         const i = player.bullets.indexOf(bullet)
         if (bullet.x > canvas.width || bullet.y > canvas.height || bullet.x < 0 || bullet.y < 0) {
@@ -79,41 +69,61 @@ function checkCollision(){
             bullet.y > enemy.position.y &&
             bullet.y < enemy.position.y + enemy.height
         ) {
-            enemy.die()
-            respawnEnemy()
-            player.bullets.pop(i)
+            if (enemy.life.health > 0){
+                enemy.life.health -= 25;
+                player.bullets.pop(i)
+            } 
+            if (enemy.life.health <= 0) {
+                enemy.die()
+                player.bullets.pop(i)
+            }
         }
     })
     
 }
 
-function respawnEnemy(){
-    getRandom()
-    enemy = new Enemy({
-        position : {
-            x: _x,
-            y: _y
-        },
-        target : {
-            x: player.x,
-            y : player.y
-        },
-        life: {
-            health: 50,
-        },
-        player : {
-            player : player
-        }
-    })
+// ---------------------------- Create new enemy -------------------------- //
+
+function SpawnEnemy(){
+    for (let i = 0; i < 4; i++){
+        getRandom()
+        enemies[i] = new Enemy({
+            position : {
+                x: _x,
+                y: _y
+            },
+            target : {
+                x: player.x,
+                y : player.y
+            },
+            life: {
+                health: 50,
+            },                
+            player : {
+              player : player
+            }
+        })
+    }
 }
 
+
+// ---------------------------- Game Logic -------------------------- //
+
+
+SpawnEnemy()
 function gameLoop() {
-    enemy.target.x = player.x
-    enemy.target.y = player.y
-    ctx.clearRect(0,0,canvas.width, canvas.height)
-    player.draw(ctx)
-    enemy.draw(ctx)
-    checkCollision()
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    player.draw(ctx);
+    enemies.forEach(function (enemy) {
+        const i = enemies.indexOf(enemy)
+        enemy.target.x = player.x
+        enemy.target.y = player.y
+        enemy.draw(ctx);
+        checkCollision(enemy)
+        if (enemy.isDead == true){
+            enemies.filter((enemy) => enemy.isDead == true)
+        }
+    })
 }
 
 

@@ -6,13 +6,19 @@ export default class Enemy {
         this.speed = 2
         this.target = target
         this.life = life
+        this.isDead = false;
     }
     draw(ctx){
         ctx.strokeStyle='red';
         ctx.strokeRect(this.position.x, this.position.y, this.width, this.height);
         ctx.fillStyle='red';
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        this.drawLife(ctx);
         this.move();
+    }
+    drawLife(ctx){
+        ctx.fillStyle='green';
+        ctx.fillRect(this.position.x, this.position.y - 8, this.life.health, 5);
     }
     move(){
             if(this.target.y > this.position.y){
@@ -32,5 +38,6 @@ export default class Enemy {
     die(){
         this.width = 0;
         this.height = 0;
+        this.isDead = true;
     }
 }
