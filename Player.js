@@ -10,7 +10,7 @@ export default class Player {
         this.bullets = [];
         this.canvas = canvas;
         this.canShoot = true;
-        this.shootDelay = 500;
+        this.shootDelay = 200;
 
         document.addEventListener("keydown", this.keydown);
         document.addEventListener("keyup", this.keyup);

@@ -84,8 +84,10 @@ function checkCollision(enemy){
 
 // ---------------------------- Create new enemy -------------------------- //
 
+let _add = 3
 function SpawnEnemy(){
-    for (let i = 0; i < 4; i++){
+    _add++
+    for (let i = 0; i < _add; i++){
         getRandom()
         enemies[i] = new Enemy({
             position : {
@@ -114,6 +116,15 @@ SpawnEnemy()
 function gameLoop() {
     ctx.clearRect(0,0,canvas.width, canvas.height);
     player.draw(ctx);
+    let null_enemy = 0
+    for (let index = 0; index < enemies.length; index++) {
+        if (enemies[index] == null){
+            null_enemy++
+        }
+    }
+    if (null_enemy == _add) {
+        SpawnEnemy()
+    }
     enemies.forEach(function (enemy) {
         if (enemy != null){
             const i = enemies.indexOf(enemy)
