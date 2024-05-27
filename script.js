@@ -105,7 +105,7 @@ function SpawnEnemy(){
             img: {
                 img: enemy_img
             },
-            allEnemies: enemies // Passer la référence de tous les ennemis
+            allEnemies: enemies
         }));
     }
 }
@@ -116,7 +116,7 @@ SpawnEnemy();
 let current_level = 1;
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(arenaImg, -315, -350, canvas.width + 650, canvas.height + 650); // Dessiner l'arène en arrière-plan
+    ctx.drawImage(arenaImg, 0, 0, canvas.width, canvas.height);
     ctx.font = "48px serif";
     ctx.fillStyle = "black";
     ctx.fillText("Level " + current_level.toString(), 10, 50);

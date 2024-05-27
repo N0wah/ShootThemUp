@@ -8,23 +8,23 @@ export default class Enemy {
         this.life = life;
         this.isDead = false;
         this.img = img;
-        this.facingRight = true; // Ajoutez cette ligne pour suivre la direction de l'ennemi
-        this.allEnemies = allEnemies; // Référence à tous les ennemis
+        this.facingRight = true; 
+        this.allEnemies = allEnemies;
     }
 
     draw(ctx){
-        ctx.save(); // Sauvegarder l'état du contexte
+        ctx.save(); 
         
         if (this.facingRight) {
             ctx.drawImage(this.img.img, this.position.x, this.position.y, this.width, this.height);
         } else {
-            // Appliquer une transformation pour inverser l'image horizontalement
+            
             ctx.translate(this.position.x + this.width, this.position.y);
             ctx.scale(-1, 1);
             ctx.drawImage(this.img.img, 0, 0, this.width, this.height);
         }
 
-        ctx.restore(); // Restaurer l'état précédent du contexte
+        ctx.restore(); 
         this.drawLife(ctx);
         this.move(ctx);
     }
@@ -34,8 +34,8 @@ export default class Enemy {
         ctx.fillRect(this.position.x + 15, this.position.y - 8, this.life.health, 5);
     }
 
-    move(ctx){
-        // Calculer la direction vers la cible
+    move(){
+       
         const dx = this.target.x - this.position.x;
         const dy = this.target.y - this.position.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -47,11 +47,8 @@ export default class Enemy {
             this.position.x += moveX;
             this.position.y += moveY;
 
-            // Mise à jour de la direction de l'ennemi
             this.facingRight = moveX > 0;
         }
-
-        // Éviter les collisions avec d'autres ennemis
         this.avoidCollisions();
     }
 
@@ -61,15 +58,13 @@ export default class Enemy {
                 const dx = other.position.x - this.position.x;
                 const dy = other.position.y - this.position.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
-                const minDistance = this.width; // La distance minimale pour éviter la superposition
+                const minDistance = this.width;
 
                 if (distance < minDistance) {
-                    // Calculer une force de séparation
                     const angle = Math.atan2(dy, dx);
                     const forceX = Math.cos(angle) * this.speed;
                     const forceY = Math.sin(angle) * this.speed;
 
-                    // Appliquer la force de séparation
                     this.position.x -= forceX;
                     this.position.y -= forceY;
                 }
