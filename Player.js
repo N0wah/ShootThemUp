@@ -42,13 +42,13 @@ export default class Player {
     }
     
     move(){
-        if (this.downPressed && this.y < 720 - this.height){
+        if (this.downPressed && this.y < window.innerHeight - this.height){
             this.y += this.speed;
         }
         if (this.upPressed && this.y > 0){
             this.y -= this.speed;
         }
-        if (this.rightPressed && this.x < 1280 - this.width){
+        if (this.rightPressed && this.x < window.innerWidth - this.width){
             this.x += this.speed;
         }
         if (this.leftPressed && this.x > 0){
