@@ -7,8 +7,11 @@ const img = document.getElementById("source");
 const gun_img = document.getElementById("gun");
 const enemy_img = document.getElementById("enemy");
 
-canvas.width = 1280;
-canvas.height = 720;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const arenaImg = new Image();
+arenaImg.src = './assets/arena.png';
 
 // ---------------------------- Get random position for the enemy outside the canvas -------------------------- //
 var _x;
@@ -113,6 +116,7 @@ SpawnEnemy();
 let current_level = 1;
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(arenaImg, -315, -350, canvas.width + 650, canvas.height + 650); // Dessiner l'arène en arrière-plan
     ctx.font = "48px serif";
     ctx.fillStyle = "black";
     ctx.fillText("Level " + current_level.toString(), 10, 50);
