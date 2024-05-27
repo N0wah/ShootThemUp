@@ -6,7 +6,7 @@ export default class Player {
         this.y = y;
         this.width = 80;
         this.height = 80;
-        this.speed = 4;
+        this.speed = 2;
         this.bullets = [];
         this.canvas = canvas;
         this.canShoot = true;
