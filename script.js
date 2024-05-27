@@ -29,22 +29,22 @@ function getRandom(){
 }
 
 function randomPosY() {
-    var x = Math.random() * (1310 - (-10)) - 10;
-    var y = Math.random() * (740 - (-10)) - 10;
-    if (x > 0 || x < 1280){
-        while (y > 0 && y < 720){
-            y = Math.random() * (740 - (-10)) - 10;
+    var x = Math.random() * ((window.innerWidth+30) - (-10)) - 10;
+    var y = Math.random() * ((window.innerHeight+30) - (-10)) - 10;
+    if (x > 0 || x < window.innerWidth){
+        while (y > 0 && y < window.innerHeight){
+            y = Math.random() * ((window.innerHeight+30) - (-10)) - 10;
         }
     }
     return [x, y];
 }
 
 function randomPosX() {
-    var x = Math.random() * (1310 - (-10)) - 10;
-    var y = Math.random() * (740 - (-10)) - 10;
-    if (y > 0 || y < 720){
-        while (x > 0 && x < 1280){
-            x = Math.random() * (1310 - (-10)) - 10;
+    var x = Math.random() * ((window.innerWidth+30) - (-10)) - 10;
+    var y = Math.random() * ((window.innerHeight+30) - (-10)) - 10;
+    if (y > 0 || y < window.innerHeight){
+        while (x > 0 && x < window.innerWidth){
+            x = Math.random() * ((window.innerWidth+30) - (-10)) - 10;
         }
     }
     return [x, y];
