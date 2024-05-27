@@ -1,16 +1,18 @@
 import Bullet from './Bullet.js';
 
 export default class Player {
-    constructor(x, y, canvas) {
+    constructor(x, y, canvas, img, gun) {
         this.x = x;
         this.y = y;
-        this.width = 20;
-        this.height = 50;
+        this.width = 80;
+        this.height = 80;
         this.speed = 4;
         this.bullets = [];
         this.canvas = canvas;
         this.canShoot = true;
-        this.shootDelay = 200;
+        this.shootDelay = 0;
+        this.img = img
+        this.gun = gun
 
         document.addEventListener("keydown", this.keydown);
         document.addEventListener("keyup", this.keyup);
@@ -20,13 +22,24 @@ export default class Player {
 
     draw(ctx){
         this.move();
-        ctx.strokeStyle='black';
-        ctx.strokeRect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle='black';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-        this.bullets.forEach(bullet => bullet.draw(ctx));
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
+        this.drawGun(ctx)
+        this.bullets.forEach(function (bullet) {
+            if (bullet != null) {
+                bullet.draw(ctx)
+            }
+        });
     }
-
+    drawGun(ctx){   
+        const angle = Math.atan2(this.mouseY - (this.y + this.height / 2), this.mouseX - (this.x + this.width / 2));
+        ctx.save();
+        ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
+        ctx.rotate(angle);
+        const gunOffsetX = 40;
+        ctx.drawImage(this.gun, -35 + gunOffsetX, -25, 70, 50);
+        ctx.restore();
+    }
+    
     move(){
         if (this.downPressed && this.y < 720 - this.height){
             this.y += this.speed;
@@ -40,7 +53,11 @@ export default class Player {
         if (this.leftPressed && this.x > 0){
             this.x -= this.speed;
         }
-        this.bullets.forEach(bullet => bullet.update());
+        this.bullets.forEach(function (bullet) {
+            if (bullet != null) {
+                bullet.update()
+            }
+        });
     }
 
     shoot(){

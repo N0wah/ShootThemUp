@@ -4,6 +4,9 @@ import Enemy from './Enemy.js';
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
+const img = document.getElementById("source")
+const gun_img = document.getElementById("gun")
+const enemy_img = document.getElementById("enemy")
 
 canvas.width = 1280;
 canvas.height = 720;
@@ -52,39 +55,40 @@ function randomPosX() {
 
 // ---------------------------- Create Player and Enemy -------------------------- //
 
-const player = new Player(canvas.width / 2, canvas.height / 2, canvas);
+const player = new Player(canvas.width / 2, canvas.height / 2, canvas, img, gun_img);
 const enemies = new Array(4)
 
 // ---------------------------- Check collision to kill enemy with bullets -------------------------- //
 
 function checkCollision(enemy){
     player.bullets.forEach(function (bullet) {
-        const i = player.bullets.indexOf(bullet)
-        if (bullet.x > canvas.width || bullet.y > canvas.height || bullet.x < 0 || bullet.y < 0) {
-            player.bullets.pop(i)
-        }
-        if (
-            bullet.x > enemy.position.x &&
-            bullet.x < enemy.position.x + enemy.width &&
-            bullet.y > enemy.position.y &&
-            bullet.y < enemy.position.y + enemy.height
-        ) {
-            if (enemy.life.health > 0){
-                enemy.life.health -= 25;
-                player.bullets.pop(i)
-            } 
-            if (enemy.life.health <= 0) {
-                enemy.die()
-                player.bullets.pop(i)
+        if (bullet != null){
+            const i = player.bullets.indexOf(bullet)
+            if (bullet.x > canvas.width || bullet.y > canvas.height || bullet.x < 0 || bullet.y < 0) {
+                player.bullets[i] = null;
+            }
+            if (
+                bullet.x > enemy.position.x &&
+                bullet.x < enemy.position.x + enemy.width &&
+                bullet.y > enemy.position.y &&
+                bullet.y < enemy.position.y + enemy.height
+            ) {
+                if (enemy.life.health > 0){
+                    enemy.life.health -= 25;
+                    player.bullets[i] = null;
+                } 
+                if (enemy.life.health <= 0) {
+                    enemy.die()
+                    player.bullets[i] = null;
+                }
             }
         }
     })
-    
 }
 
 // ---------------------------- Create new enemy -------------------------- //
-
 let _add = 3
+
 function SpawnEnemy(){
     _add++
     for (let i = 0; i < _add; i++){
@@ -103,6 +107,9 @@ function SpawnEnemy(){
             },                
             player : {
               player : player
+            },
+            img : {
+                img : enemy_img
             }
         })
     }
@@ -113,31 +120,41 @@ function SpawnEnemy(){
 
 
 SpawnEnemy()
+let current_level = 1
 function gameLoop() {
     ctx.clearRect(0,0,canvas.width, canvas.height);
+    ctx.font = "48px serif";
+    ctx.fillStyle = "black";
+    ctx.fillText("Level " + current_level.toString(), 10, 50);
     player.draw(ctx);
-    let null_enemy = 0
-    for (let index = 0; index < enemies.length; index++) {
-        if (enemies[index] == null){
-            null_enemy++
-        }
-    }
-    if (null_enemy == _add) {
-        SpawnEnemy()
-    }
-    enemies.forEach(function (enemy) {
-        if (enemy != null){
-            const i = enemies.indexOf(enemy)
-            enemy.target.x = player.x
-            enemy.target.y = player.y
-            enemy.draw(ctx);
-            checkCollision(enemy)
-            if (enemy.isDead == true){
-                enemies[i] = null
-                console.log(enemies);
+    if (current_level != 5) {
+        let null_enemy = 0
+        for (let index = 0; index < enemies.length; index++) {
+            if (enemies[index] == null){
+                null_enemy++
             }
         }
-    })
+        if (null_enemy == _add) {
+            current_level++
+            SpawnEnemy()
+        }
+        enemies.forEach(function (enemy) {
+            if (enemy != null){
+                const i = enemies.indexOf(enemy)
+                enemy.target.x = player.x
+                enemy.target.y = player.y
+                enemy.draw(ctx);
+                checkCollision(enemy)
+                if (enemy.isDead == true){
+                    enemies[i] = null
+                    console.log(enemies);
+                }
+            }
+        })
+    }
+    if (current_level == 5){
+        //boss
+    } 
 }
 
 
