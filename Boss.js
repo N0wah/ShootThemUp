@@ -1,18 +1,16 @@
-export default class Enemy {
-    constructor({position, target, life, img, allEnemies}) {
+export default class Boss {
+     constructor({position, target, life, img}) {
         this.position = position;
-        this.width = 80;
-        this.height = 80;
-        this.speed = 2;
+        this.width = 160;
+        this.height = 160;
+        this.speed = 1;
         this.target = target;
         this.life = life;
         this.isDead = false;
         this.img = img;
-        this.facingRight = true; 
-        this.allEnemies = allEnemies;
+        this.facingRight = true;
         this.toucheJoueur = false;
     }
-
     draw(ctx){
         ctx.save(); 
         
@@ -31,7 +29,7 @@ export default class Enemy {
 
     drawLife(ctx){
         ctx.fillStyle = 'green';
-        ctx.fillRect(this.position.x + 15, this.position.y - 8, this.life.health, 5);
+        ctx.fillRect(this.position.x + 15, this.position.y - 8, this.life.health / 15, 5);
     }
 
     move(){
@@ -49,28 +47,7 @@ export default class Enemy {
             this.facingRight = moveX > 0;
         }
 
-        this.avoidCollisions();
         this.checkCollisionWithPlayer();
-    }
-
-    avoidCollisions() {
-        for (let other of this.allEnemies) {
-            if (other !== this && other != null) {
-                const dx = other.position.x - this.position.x;
-                const dy = other.position.y - this.position.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                const minDistance = this.width;
-
-                if (distance < minDistance) {
-                    const angle = Math.atan2(dy, dx);
-                    const forceX = Math.cos(angle) * this.speed;
-                    const forceY = Math.sin(angle) * this.speed;
-
-                    this.position.x -= forceX;
-                    this.position.y -= forceY;
-                }
-            }
-        }
     }
 
     checkCollisionWithPlayer() {

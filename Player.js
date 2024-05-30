@@ -14,6 +14,7 @@ export default class Player {
         this.shootDelay = 0;
         this.img = img
         this.gun = gun
+        this.dead = false
 
         document.addEventListener("keydown", this.keydown);
         document.addEventListener("keyup", this.keyup);
