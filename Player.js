@@ -37,8 +37,7 @@ export default class Player {
         ctx.save();
         ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
         ctx.rotate(angle);
-        const gunOffsetX = 40;
-        ctx.drawImage(this.gun, -35 + gunOffsetX, -25, 70, 50);
+        ctx.drawImage(this.gun, -35 + 40, -25, 70, 50);
         ctx.restore();
     }
     
