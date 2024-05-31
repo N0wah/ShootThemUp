@@ -1,7 +1,7 @@
-import Player from './Player.js';
-import Enemy from './Enemy.js';
-import Explosion from './Explosion.js';
-import Boss from './Boss.js';
+import Player from './class/Player.js';
+import Enemy from './class/Enemy.js';
+import Explosion from './class/Explosion.js';
+import Boss from './class/Boss.js';
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");

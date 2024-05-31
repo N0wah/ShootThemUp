@@ -5,7 +5,7 @@ body{
 }
 
 .back{
-    background: url('./assets/htp-without-buttob.png');
+    background: url('../assets/htp-without-buttob.png');
     background-position: center;
     background-size: cover;
     position: relative;
