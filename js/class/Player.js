@@ -73,6 +73,9 @@ export default class Player {
                 x: bulletSpeed * Math.cos(angle),
                 y: bulletSpeed * Math.sin(angle)
             };
+            var audio = new Audio('../assets/sound/laserShoot.wav')
+            audio.volume = 0.5
+            audio.play()
             this.bullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2, velocity));
 
             this.canShoot = false;

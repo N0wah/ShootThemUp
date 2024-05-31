@@ -15,6 +15,7 @@ const ex4 = document.getElementById("ex4");
 const ex5 = document.getElementById("ex5");
 const ex6 = document.getElementById("ex6");
 const ex7 = document.getElementById("ex7");
+document.getElementById("music").loop = true;
 
 
 canvas.width = window.innerWidth;
@@ -87,6 +88,9 @@ function checkCollision(enemy, isBoss){
                 } 
                 if (enemy.life.health <= 0) {
                     enemy.die();
+                    var audio = new Audio('../assets/sound/explosion.wav')
+                    audio.volume = 0.5;
+                    audio.play()
                     explosion = new Explosion({
                         enemy : {
                             enemy : enemy
