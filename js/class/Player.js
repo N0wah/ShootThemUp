@@ -16,6 +16,7 @@ export default class Player {
         this.gun = gun
         this.dead = false
         this.devShoot = false;
+        this.refresh = false
 
         document.addEventListener("keydown", this.keydown);
         document.addEventListener("keyup", this.keyup);
@@ -118,6 +119,9 @@ export default class Player {
             } else {
                 this.devShoot = true
             }
+        }
+        if (e.code === 'KeyR'){
+            this.refresh = true
         }
     }
 

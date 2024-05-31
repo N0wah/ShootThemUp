@@ -251,6 +251,11 @@ function gameLoop() {
         ctx.font = "150px serif";
         ctx.fillStyle = "red";
         ctx.fillText("You're dead ", canvas.width/2 - 350, canvas.height /2);
+        ctx.font = "70px serif";
+        ctx.fillText("Press R to refresh game", canvas.width/2 - 350, canvas.height /2 + 300);
+        if(player.refresh){
+            location.reload()
+        }
     }
 }
 
