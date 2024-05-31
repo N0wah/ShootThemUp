@@ -15,6 +15,7 @@ export default class Player {
         this.img = img
         this.gun = gun
         this.dead = false
+        this.devShoot = false;
 
         document.addEventListener("keydown", this.keydown);
         document.addEventListener("keyup", this.keyup);
@@ -24,6 +25,9 @@ export default class Player {
 
     draw(ctx){
         this.move();
+        if (this.devShoot){
+            this.shoot()
+        }
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
         this.drawGun(ctx)
         this.bullets.forEach(function (bullet) {
@@ -102,6 +106,15 @@ export default class Player {
         }
         if (e.code === 'KeyS'){
             this.downPressed = true;
+        }
+        if (e.code === 'KeyM'){
+            if (this.devShoot){
+                this.devShoot = false
+                console.log(this.devShoot);
+                console.log(e.code);
+            } else {
+                this.devShoot = true
+            }
         }
     }
 
