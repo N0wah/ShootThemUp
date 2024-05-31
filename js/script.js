@@ -244,7 +244,11 @@ function gameLoop() {
                 current_level += 1
                 init_boss = 0;
                 enemies = saved_enemies
-                wichBoss +=1;
+                if (wichBoss != 3){
+                    wichBoss +=1;
+                }else {
+                    wichBoss = 1
+                }
             }
         }
     } else {
