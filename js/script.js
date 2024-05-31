@@ -21,7 +21,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const arenaImg = new Image();
-arenaImg.src = './assets/arena.png';
+arenaImg.src = '../assets/arena.png';
 
 // ---------------------------- Get random position for the enemy outside the canvas -------------------------- //
 var _x;
