@@ -15,7 +15,7 @@ const ex4 = document.getElementById("ex4");
 const ex5 = document.getElementById("ex5");
 const ex6 = document.getElementById("ex6");
 const ex7 = document.getElementById("ex7");
-const boss_img = document.getElementById("boss");
+
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -144,10 +144,25 @@ let current_level = 1;
 if (current_level % 5 != 0 || current_level % 5 != 5) {
     SpawnEnemy();
 }
+var wichBoss = 1;
+var boss_img = null
 var init_boss = 0;
 var boss = null;
 var saved_enemies = null
 function gameLoop() {
+    switch (wichBoss) {
+        case 1:
+            boss_img = document.getElementById("boss1");
+            break;
+        case 2:
+            boss_img = document.getElementById("boss2");
+            break;
+        case 3:
+            boss_img = document.getElementById("boss3")
+            break;
+        default:
+            break;
+    }
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(arenaImg, 0, 0, canvas.width, canvas.height);
     ctx.font = "48px serif";
@@ -225,6 +240,7 @@ function gameLoop() {
                 current_level += 1
                 init_boss = 0;
                 enemies = saved_enemies
+                wichBoss +=1;
             }
         }
     } else {
